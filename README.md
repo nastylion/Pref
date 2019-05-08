@@ -34,11 +34,13 @@ private val counter = "appStarts".asPref(0).run { singleChange { set(it + 1) } }
 ```
 
 ###### Live Data
-Using a shared preference `Pref<T>` as `LiveData<T>` is very easy
+Using a shared preference `Pref<T>` as `LiveData<T>` is made very easy. `Pref<T>.asLiveData()` returns a `MutableLiveData<T>` that is updated when the shared preference value changes. If you change the value of the LiveData object the shared preference will be updated asynchronously.
+
+This can be helpful when you are using it in combindation with Android Two-Way-Binding of you UI elements.
 ```
 class MyViewModel: ViewModel() {
- //Holds a MutableLiveData<Boolean>
- val switchValue = Settings.switchValue.asLiveData()
+ //Holds a MutableLiveData<Boolean> that is set as soon as the shared pref is read on a workerthread
+ val switchValue = "switch".asPref(false).asLiveData()
 }
 
 //using Two-Way Binding your UI stores changes automatically in shared preferences
