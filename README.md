@@ -4,11 +4,50 @@ Shared Preferences access made easy in Kotlin
 
 ###### About 
 This library provides an easy access to **Shared Preferences** on Android.
-Read and Writes as *asynchrously* executed by using **Kotlin courotines**.
+Read and Writes as *asynchrously* executed by using **Kotlin coroutines**.
 Extension function provide a converstion to a **LiveData** 
 
 ## Example
-###### Init 
+
+###### Demo 
+Decareing a shared prference key with default value as a variable. In this case anyName will be updated automatically everytime the shared preference changes. It holds the default value `false` and is stored with 'sharedPreferenceKey'
+Use second parameter with false if you want to initialize synchronously the preference value.
+```
+object Settings {
+ //name of the string defines the key where the value is stored in the shared preferences
+ //in this case false is the default value
+ val switchValue = "switch".asPref(false)
+ //sync call example
+ val anyName = "sharedPreferenceKey".asPref("defaultValue",false)
+}
+```
+
+###### Read & Writes 
+Anywhere in your code you can simple access with `Settings.anyName.get()` the value of the shared preference.
+Use `Settings.anyName.set(true)` or `Settings.anyName += true` to update a value (will be done in a workerthread)
+
+If you do the init asynchronously there is a helper lambda `singleChange` that is executed once when the value is loaded
+```
+private val appStarts = "appStarts".asPref(0).run { singleChange { set(it + 1) } }
+```
+
+###### Live Data
+Using a shared preference `Pref<T>` as `LiveData<T>` is very easy
+```
+class MyViewModel: ViewModel() {
+ //Holds a MutableLiveData<Boolean>
+ val switchValue = Settings.switchValue.asLiveData()
+}
+
+//using Two-Way Binding your UI stores changes automatically in shared preferences
+<androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewModel.switchValue}"/>
+```
+
+###### Initialisation 
 Init Pref library in your Application class
 ```
 class MyApplication : Application() {
