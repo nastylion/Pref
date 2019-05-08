@@ -90,7 +90,7 @@ allprojects {
  }
 }
 dependencies {
- implementation 'com.github.nastylion:Pref:0.0.3'
+ implementation 'com.github.nastylion:Pref:0.0.5'
 }
 ```
 
