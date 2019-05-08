@@ -30,7 +30,7 @@ Use `Settings.anyName.set(true)` or `Settings.anyName += true` to update a value
 
 If you do the init asynchronously there is a helper lambda `singleChange` that is executed once when the value is loaded
 ```
-private val appStarts = "appStarts".asPref(0).run { singleChange { set(it + 1) } }
+private val counter = "appStarts".asPref(0).run { singleChange { set(it + 1) } }
 ```
 
 ###### Live Data
