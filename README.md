@@ -4,7 +4,7 @@ Shared Preferences access made easy in Kotlin
 
 ###### About 
 This library provides an easy access to **Shared Preferences** on Android.
-Read and Writes are *asynchrously* executed by **Kotlin coroutines**.
+Read and Writes are *asynchronous* executed by **Kotlin coroutines**.
 Extension function provide a converstion to a **LiveData**
 All done by a single line of code
 
