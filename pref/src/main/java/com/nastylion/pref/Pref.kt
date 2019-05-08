@@ -18,7 +18,7 @@ inline fun <reified T : Any> String.asPref(defaultValue: T, asyncInit: Boolean =
     Pref(this, defaultValue, asyncInit)
 
 /**
- * generate live data that will be updated when shared asPref value changes
+ * generate live data that will be updated when shared Pref value changes
  */
 inline fun <reified T : Any> Pref<T>.asLiveData(): MutableLiveData<T?> = MutableLiveData<T?>().apply {
     //update live data value based on shared pref value
