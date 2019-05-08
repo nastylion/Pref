@@ -4,8 +4,9 @@ Shared Preferences access made easy in Kotlin
 
 ###### About 
 This library provides an easy access to **Shared Preferences** on Android.
-Read and Writes are *asynchrously* executed by using **Kotlin coroutines**.
-Extension function provide a converstion to a **LiveData** 
+Read and Writes are *asynchrously* executed by **Kotlin coroutines**.
+Extension function provide a converstion to a **LiveData**
+All done by a single line of code
 
 ## Example
 
@@ -48,7 +49,7 @@ class MyViewModel: ViewModel() {
                 android:checked="@={viewModel.switchValue}"/>
 ```
 
-###### Initialisation 
+## Initialisation 
 Init Pref library in your Application class
 ```
 class MyApplication : Application() {
@@ -67,5 +68,11 @@ Pref.init(PreferenceManager.getDefaultSharedPreferences(this)) { key: String, va
 }
 ```
 
+###### Gradle 
+This library depends on 'kotlinx.coroutines.*' and 'androidx.core'
+```
+implementation "androidx.core:core-ktx:XXX"
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:XXX"
+```
 
 
