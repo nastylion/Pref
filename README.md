@@ -13,6 +13,7 @@ All done in a single line of code
 ###### Demo 
 Decareing a shared prference key with default value as a variable. In this case `anyName` will be updated automatically everytime the shared preference changes. It holds the default value `false` and is stored with 'sharedPreferenceKey'
 Use second parameter with false if you want to initialize synchronously the preference value.
+String is extended by `.asPref(t:T)` to create a `Pref<T>` object.
 ```
 object Settings {
  //name of the string defines the key where the value is stored in the shared preferences
