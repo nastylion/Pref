@@ -17,6 +17,7 @@ object Settings {
  //name of the string defines the key where the value is stored in the shared preferences
  //in this case false is the default value
  val switchValue = "switch".asPref(false)
+ 
  //sync call example
  val anyName = "sharedPreferenceKey".asPref("defaultValue",false)
 }
