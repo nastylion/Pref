@@ -11,7 +11,7 @@ All done in a single line of code
 ## Example
 
 ###### Demo 
-Decareing a shared prference key with default value as a variable. In this case anyName will be updated automatically everytime the shared preference changes. It holds the default value `false` and is stored with 'sharedPreferenceKey'
+Decareing a shared prference key with default value as a variable. In this case `anyName` will be updated automatically everytime the shared preference changes. It holds the default value `false` and is stored with 'sharedPreferenceKey'
 Use second parameter with false if you want to initialize synchronously the preference value.
 ```
 object Settings {
