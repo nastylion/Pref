@@ -75,8 +75,23 @@ Pref.init(PreferenceManager.getDefaultSharedPreferences(this)) { key: String, va
 ###### Gradle 
 This library depends on 'kotlinx.coroutines.*' and 'androidx.core'
 ```
-implementation "androidx.core:core-ktx:XXX"
-implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:XXX"
+implementation 'androidx.appcompat:appcompat:1.0.2'
+implementation "androidx.core:core-ktx:1.1.0-alpha05"
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
 ```
+
+Add library to your project with gradle
+```
+allprojects {
+ repositories {
+  ...
+  maven { url 'https://jitpack.io' }
+ }
+}
+dependencies {
+  implementation 'com.github.nastylion:Pref:0.0.1'
+}
+```
+
 
 
