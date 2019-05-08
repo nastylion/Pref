@@ -1,6 +1,5 @@
 # Pref
 Shared Preferences access made easy in Kotlin
-> **be aware:** my first public library, my first time using Kotlin
 
 ###### About 
 This library provides an easy access to **Shared Preferences** on Android.
