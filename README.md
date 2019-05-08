@@ -17,7 +17,7 @@ String is extended with `.asPref(t:T)` to create a `Pref<T>` object, will make y
 ```
 object Settings {
  //name of the string defines the key where the value is stored in the shared preferences
- val booleanValue = "sharedPreferenceKey".asPref(false) // false is the default value, defines the type of the Pref
+ val booleanValue = "sharedPreferenceKey".asPref(false) // false = default value & defines the type
  
  //sync delcaration example false executes the initial shared preference read synchronously
  val anyName = "stringExample".asPref("defaultValue", false)
