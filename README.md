@@ -9,18 +9,18 @@ Extension function provide a converstion to a **LiveData**.
 All done in a single line of code
 
 ## Example
+Decareing a shared preference key with default value as a variable. 
 
-###### Demo 
-Decareing a shared prference key with default value as a variable. In this case `anyName` will be updated automatically everytime the shared preference changes. It holds the default value `false` and is stored with 'sharedPreferenceKey'
-Use second parameter with false if you want to initialize synchronously the preference value.
-String is extended by `.asPref(t:T)` to create a `Pref<T>` object.
+In this case `anyName` will be updated automatically everytime the shared preference changes. It holds the default value `false` and is stored with the key:'sharedPreferenceKey'
+Use the second parameter with false if you want to initialize the preference value synchronously.
+String is extended with `.asPref(t:T)` to create a `Pref<T>` object, will make your Settings object look clean.
 ```
 object Settings {
  //name of the string defines the key where the value is stored in the shared preferences
- val switchValue = "switch".asPref(false) // false is the default value, defines the type of the Pref
+ val booleanValue = "sharedPreferenceKey".asPref(false) // false is the default value, defines the type of the Pref
  
  //sync delcaration example false executes the initial shared preference read synchronously
- val anyName = "sharedPreferenceKey".asPref("defaultValue",false)
+ val anyName = "stringExample".asPref("defaultValue", false)
 }
 ```
 
@@ -30,13 +30,15 @@ Use `Settings.anyName.set(true)` or `Settings.anyName += true` to update a value
 
 If you do the init asynchronously there is a helper lambda `singleChange` that is executed once when the value is loaded
 ```
+//everytime the app starts a counter will be incremented and stored back in shared preference
 private val counter = "appStarts".asPref(0).run { singleChange { set(it + 1) } }
 ```
 
 ###### Live Data
 Using a shared preference `Pref<T>` as `LiveData<T>` is made very easy. `Pref<T>.asLiveData()` returns a `MutableLiveData<T>` that is updated when the shared preference value changes. If you change the value of the LiveData object the shared preference will be updated asynchronously.
 
-This can be helpful when you are using it in combindation with Android Two-Way-Binding of you UI elements.
+This can be very sexy when you are using it in combindation with Android Two-Way-Binding of you UI elements.
+With a single line of code you load and store UI updates in shared preference
 ```
 class MyViewModel: ViewModel() {
  //Holds a MutableLiveData<Boolean> that is set as soon as the shared pref is read on a workerthread
