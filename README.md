@@ -16,10 +16,9 @@ Use second parameter with false if you want to initialize synchronously the pref
 ```
 object Settings {
  //name of the string defines the key where the value is stored in the shared preferences
- //in this case false is the default value
- val switchValue = "switch".asPref(false)
+ val switchValue = "switch".asPref(false) // false is the default value, defines the type of the Pref
  
- //sync call example
+ //sync delcaration example false executes the initial shared preference read synchronously
  val anyName = "sharedPreferenceKey".asPref("defaultValue",false)
 }
 ```
