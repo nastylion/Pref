@@ -80,7 +80,8 @@ implementation "androidx.core:core-ktx:1.1.0-alpha05"
 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
 ```
 
-Add library to your project with gradle
+Add library to your project with gradle 
+[![](https://jitpack.io/v/nastylion/Pref.svg)](https://jitpack.io/#nastylion/Pref)
 ```
 allprojects {
  repositories {
