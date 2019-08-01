@@ -200,7 +200,12 @@ class Pref<T : Any>(
     /**
      * returns current value
      */
-    fun get() = value
+    fun getRaw() = value
+
+    /**
+     * returns current value
+     */
+    fun get() = value ?: defaultValue
 
     /**
      * name of object
