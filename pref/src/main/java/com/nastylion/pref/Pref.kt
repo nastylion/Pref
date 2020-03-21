@@ -150,9 +150,18 @@ class Pref<T : Any>(
      */
     fun set(value: T) {
         //stop last write
-        lastWrite?.cancel()
+        val oldWrite = lastWrite
         //start write
-        lastWrite = uiScope.launch { setValueToPreferencesAsync(value) }
+        lastWrite = uiScope.launch {
+            oldWrite?.cancelAndJoin()
+            setValueToPreferencesAsync(value)
+        }
+        //set current values, don't wait for async listener
+        this@Pref.value = value
+    }
+
+    suspend fun setAsync(value: T) {
+        setValueToPreferencesAsync(value)
         //set current values, don't wait for async listener
         this@Pref.value = value
     }
