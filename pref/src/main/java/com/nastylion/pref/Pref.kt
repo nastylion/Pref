@@ -166,11 +166,13 @@ class Pref<T : Any>(
         this@Pref.value = value
     }
 
-    private suspend fun getValueFromPreferencesAsync() = withContext(Dispatchers.IO) {
+    suspend fun getAsync() = getValueFromPreferencesAsync()
+
+    private suspend fun getValueFromPreferencesAsync(): T? = withContext(Dispatchers.IO) {
         getValueFromPreferencesSync()
 
         //update value listener
-        value?.let { valueChangedAsync?.invoke(it) }
+        value?.apply { valueChangedAsync?.invoke(this) }
     }
 
     private suspend fun setValueToPreferencesAsync(value: T) =
