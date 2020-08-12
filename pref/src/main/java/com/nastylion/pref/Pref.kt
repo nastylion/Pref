@@ -28,7 +28,9 @@ inline fun <reified T : Any> Pref<T>.asLiveData(): MutableLiveData<T?> = Mutable
     valueChangedAsync = { if (this.value != it) postValue(it) }
 
     //update shared pref based on current live data value if value is not null
-    observeForever { liveDataPrefValue -> liveDataPrefValue?.let { if (it != get()) set(it) } }
+    //IllegalStateException
+    //Cannot invoke setValue on a background thread use POST Value
+    observeForever { liveDataPrefValue -> liveDataPrefValue?.let { if (it != get()) postValue(it) } }
 }
 
 /**
