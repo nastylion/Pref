@@ -3,6 +3,8 @@
 package com.nastylion.pref
 
 import android.content.SharedPreferences
+import android.os.Looper
+import android.util.Log
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.core.content.edit
@@ -20,18 +22,26 @@ inline fun <reified T : Any> String.asPref(defaultValue: T, asyncInit: Boolean =
 /**
  * generate live data that will be updated when shared Pref value changes
  */
-inline fun <reified T : Any> Pref<T>.asLiveData(): MutableLiveData<T?> = MutableLiveData<T?>().apply {
-    //update live data value based on shared pref value
-    value = get()
+inline fun <reified T : Any> Pref<T>.asLiveData(): MutableLiveData<T?> =
+    MutableLiveData<T?>().apply {
+        //update live data value based on shared pref value
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            value = get()
+        } else {
+            GlobalScope.launch {
+                Log.d("PREF","PREF async init value")
+                setAsync(get())
+            }
+        }
 
-    //update live data based onChanged shared pref value (will be called async)
-    valueChangedAsync = { if (this.value != it) postValue(it) }
+        //update live data based onChanged shared pref value (will be called async)
+        valueChangedAsync = { if (this.value != it) postValue(it) }
 
-    //update shared pref based on current live data value if value is not null
-    //IllegalStateException
-    //Cannot invoke setValue on a background thread use POST Value
-    observeForever { liveDataPrefValue -> liveDataPrefValue?.let { if (it != get()) postValue(it) } }
-}
+        //update shared pref based on current live data value if value is not null
+        //IllegalStateException
+        //Cannot invoke setValue on a background thread use POST Value
+        observeForever { liveDataPrefValue -> liveDataPrefValue?.let { if (it != get()) postValue(it) } }
+    }
 
 /**
  * Wait for loaded value and run block
@@ -76,10 +86,12 @@ class Pref<T : Any>(
      * holds current value
      */
     private var value: T? = null
+
     /**
      * last read job, store so we can stop it in case there is another read event
      */
     private var lastRead: Job? = null
+
     /**
      * last write job, store so we can stop it in case there is another write event
      */
@@ -115,7 +127,10 @@ class Pref<T : Any>(
         /**
          * Supply shared preference and optional lambda to be called on main thread everytime a shared pref changes
          */
-        fun init(_sharedPreferences: SharedPreferences, @MainThread _listener: ((key: String, value: Any?) -> Unit)? = null) {
+        fun init(
+            _sharedPreferences: SharedPreferences,
+            @MainThread _listener: ((key: String, value: Any?) -> Unit)? = null
+        ) {
             sharedPreferences = _sharedPreferences
             valueChangedMainThread = _listener
         }
